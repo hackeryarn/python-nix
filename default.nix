@@ -1,7 +1,7 @@
 with import <nixpkgs> {};
 
 let
-  dbName = "wordcoutn_dev";
+  dbName = "wordcount_dev";
   config = "Development";
 in
 stdenv.mkDerivation {
@@ -14,11 +14,15 @@ stdenv.mkDerivation {
   ];
 
   shellHook = ''
-    export PGDATA=~/tmp/pgdata
+    export PGDATA="$PWD/tmp/pgdata"
     export DATABASE_URL="postgresql://localhost/${dbName}"
     export APP_SETTINGS="config.${config}Config"
 
-    pg_ctl start
+    if [ ! -d $PGDATA ]; then
+       initdb
+       pg_ctl -w start
+       createdb ${dbName}
+    fi
 
     pipenv install
     pipenv shell
