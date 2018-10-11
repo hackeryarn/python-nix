@@ -1,6 +1,6 @@
 # python-nix
 
-This project is a starter for a simple `Flas` application with `posgresql` ready to go.
+This project is a starter for a simple `Flask` application with `posgresql` ready to go.
 
 ## Requirements
 
